@@ -2,29 +2,3 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.example-form{
-    margin: 90px 0px 0px 500px;
-    .mat-form-field-infix{
-        width: 500px;
-    }
-    
-}
-.example-button-row{
-    button{
-        width: 500px;
-    }
-    
-}
-.example-card{
-    margin: 90px 0px 0px 500px;
-    width: 30%;
-    a{
-        width:100px;
-        text-decoration: none;
-        margin-left: 170px;
-        display: block;
-        padding: 7px;
-        color: black;
-        background-color: rgb(73, 87, 168);
-    }
-}

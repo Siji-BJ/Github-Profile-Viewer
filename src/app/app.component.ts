@@ -10,6 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
   title = 'github-profile-viewer';
+  inputValue: string ;
   isLoading: boolean;
   isFound: boolean;
   myForm: FormGroup;
@@ -24,19 +25,20 @@ export class AppComponent implements OnInit {
       gitHubId: new FormControl('')
     });
   }
-  onSubmit(form: FormGroup) {
+  onSubmit() {
     this.isLoading = true;
-    this.locallyStoredData = localStorage.getItem(form.value.gitHubId);
+    this.inputValue = this.myForm.value.gitHubId;
+    this.locallyStoredData = localStorage.getItem(this.inputValue);
     if (this.locallyStoredData ) {
       this.isLoading = false;
       this.profileDetails = JSON.parse(this.locallyStoredData );
       this.display(this.profileDetails);
     } else {
-      this.http.get('https://api.github.com/users/' + form.value.gitHubId + '?access_token=beba3c150021bfb49769385927dfa59fac2cdf04').subscribe(response => {
+      this.http.get('https://api.github.com/users/' + this.inputValue).subscribe(response => {
         this.profileDetails = response;
         this.display(this.profileDetails);
         this.isLoading = false;
-        localStorage.setItem(form.value.gitHubId, JSON.stringify(this.profileDetails));
+        localStorage.setItem(this.inputValue, JSON.stringify(this.profileDetails));
         }, error => {
                       this.isFound = false;
                       this.openSnackBar(' No Results Found! ', 'Close' );

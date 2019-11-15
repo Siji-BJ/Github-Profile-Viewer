@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   location: any;
   avatarUrl: any;
   htmlUrl: any;
+  locallyStoredData: any;
   ngOnInit() {
     this.myForm = new FormGroup({
       gitHubId: new FormControl('')
@@ -25,12 +26,12 @@ export class AppComponent implements OnInit {
   }
   onSubmit(form: FormGroup) {
     this.isLoading = true;
-    if (localStorage.getItem(form.value.githubId)) {
+    this.locallyStoredData = localStorage.getItem(form.value.gitHubId);
+    if (this.locallyStoredData ) {
       this.isLoading = false;
-      this.profileDetails = JSON.parse(localStorage.getItem(form.value.gitHubId));
+      this.profileDetails = JSON.parse(this.locallyStoredData );
       this.display(this.profileDetails);
     } else {
-      // tslint:disable-next-line: max-line-length
       this.http.get('https://api.github.com/users/' + form.value.gitHubId + '?access_token=beba3c150021bfb49769385927dfa59fac2cdf04').subscribe(response => {
         this.profileDetails = response;
         this.display(this.profileDetails);
@@ -53,7 +54,7 @@ export class AppComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 2000,
       verticalPosition: 'top',
-      horizontalPosition: 'center'
+      horizontalPosition: 'center',
 
     });
   }
